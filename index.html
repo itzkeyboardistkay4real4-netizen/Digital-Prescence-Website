@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kay — Digital Presence Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0B1C2D',
+                        charcoal: '#111111',
+                        softwhite: '#F5F5F5',
+                        gold: '#C6A75E',
+                        'gold-hover': '#B59852',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    },
+                    letterSpacing: {
+                        'widest-xl': '0.2em',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B1C2D; }
+        ::-webkit-scrollbar-thumb { background: #1a2d42; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #C6A75E; }
+
+        .architectural-grid {
+            background-image: 
+                linear-gradient(rgba(198, 167, 94, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(198, 167, 94, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+            -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+        }
+
+        ::selection { background: #C6A75E; color: #0B1C2D; }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-underline {
+            position: relative;
+        }
+        .hover-underline::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #C6A75E;
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .hover-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(198, 167, 94, 0.3);
+        }
+
+        .btn-outline {
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: rgba(198, 167, 94, 0.1);
+            border-color: #C6A75E;
+        }
+
+        .brand-logo {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .brand-logo:hover {
+            transform: scale(1.05);
+        }
+        .footer-logo {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="bg-navy text-softwhite font-sans antialiased overflow-x-hidden">
+
+    <div class="fixed inset-0 architectural-grid pointer-events-none z-0"></div>
+    <div class="fixed inset-0 bg-gradient-to-b from-navy via-[#0d1621] to-charcoal pointer-events-none z-0 opacity-95"></div>
+
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-500 py-6 border-b border-transparent">
+        <div class="container mx-auto px-6 md:px-12 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 group" onclick="window.scrollTo(0,0); return false;">
+                <img src="logo.png" alt="Kay Logo" class="brand-logo">
+                <span class="font-serif text-lg tracking-widest text-softwhite group-hover:text-gold transition-colors duration-300 hidden md:block">KAY</span>
+            </a>
+
+            <nav class="hidden md:flex gap-8 text-xs tracking-widest font-medium text-gray-400">
+                <a href="#who" class="hover:text-gold transition-colors duration-300 hover-underline">WHO I AM</a>
+                <a href="#what" class="hover:text-gold transition-colors duration-300 hover-underline">WHAT I DO</a>
+                <a href="#why" class="hover:text-gold transition-colors duration-300 hover-underline">WHY IT MATTERS</a>
+                <a href="#contact" class="hover:text-gold transition-colors duration-300 hover-underline">CONTACT</a>
+            </nav>
+
+            <button id="mobile-menu-btn" class="md:hidden text-softwhite hover:text-gold focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-navy/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-500 flex flex-col items-center justify-center gap-8 md:hidden">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-softwhite hover:text-gold">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <a href="#who" class="mobile-link text-2xl font-serif tracking-widest text-softwhite hover:text-gold">WHO I AM</a>
+            <a href="#what" class="mobile-link text-2xl font-serif tracking-widest text-softwhite hover:text-gold">WHAT I DO</a>
+            <a href="#why" class="mobile-link text-2xl font-serif tracking-widest text-softwhite hover:text-gold">WHY IT MATTERS</a>
+            <a href="#contact" class="mobile-link text-2xl font-serif tracking-widest text-softwhite hover:text-gold">CONTACT</a>
+        </div>
+    </header>
+
+    <section class="relative min-h-screen flex items-center justify-center px-6 pt-20 pb-20">
+        <div class="max-w-4xl mx-auto text-center z-10">
+            <div class="mb-6 reveal-on-scroll">
+                <span class="text-gold text-xs tracking-widest-xl uppercase">Digital Presence Architect</span>
+            </div>
+
+            <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-softwhite leading-tight mb-8 reveal-on-scroll" style="transition-delay: 100ms;">
+                Your Business Needs More Than <br>
+                <span class="italic text-gray-400">Just a Website</span>
+            </h1>
+
+            <div class="h-px w-20 bg-gold/30 mx-auto mb-8 reveal-on-scroll" style="transition-delay: 200ms;"></div>
+
+            <p class="text-lg md:text-xl text-gray-400 font-light mb-6 max-w-2xl mx-auto leading-relaxed reveal-on-scroll" style="transition-delay: 300ms;">
+                I help business owners build a strong digital presence that makes them look clear, trusted, and professional.
+            </p>
+
+            <p class="text-gray-500 mb-12 max-w-xl mx-auto leading-relaxed text-base reveal-on-scroll" style="transition-delay: 400ms;">
+                I don't just design websites. I build how your business looks and feels online. So when people find you, they take you seriously.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal-on-scroll" style="transition-delay: 500ms;">
+                <a href="#contact" class="btn-primary px-8 py-4 bg-gold text-navy font-medium tracking-widest text-xs uppercase">
+                    Book a Consultation
+                </a>
+                <a href="https://wa.me/1234567890" target="_blank" class="btn-outline px-8 py-4 border border-white/20 text-softwhite font-medium tracking-widest text-xs uppercase hover:text-gold">
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="who" class="relative py-24 px-6 bg-charcoal/20 border-t border-white/5">
+        <div class="container mx-auto max-w-4xl">
+            <div class="grid md:grid-cols-12 gap-12 items-start">
+                <div class="md:col-span-4 reveal-on-scroll">
+                    <span class="text-gold text-xs tracking-widest-xl uppercase mb-2 block">01</span>
+                    <h2 class="font-serif text-3xl md:text-4xl text-softwhite">Who I Am</h2>
+                </div>
+                
+                <div class="md:col-span-8 space-y-6 reveal-on-scroll" style="transition-delay: 100ms;">
+                    <p class="text-xl text-gray-300 font-serif italic">
+                        I am a Digital Presence Architect.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        This means I design how your business shows up online. Your website, your message, your layout, your structure — everything should work together.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed">
+                        I make sure your business looks organized, clear, and strong.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="what" class="relative py-24 px-6">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-gold text-xs tracking-widest-xl uppercase mb-2 block">02</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-softwhite">What I Do</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group p-8 border border-white/5 hover:border-gold/20 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 reveal-on-scroll">
+                    <div class="w-10 h-10 border border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold transition-colors">
+                        <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl text-softwhite mb-3">Digital Structure</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        I plan and design your website in a way that makes sense and feels professional.
+                    </p>
+                </div>
+
+                <div class="group p-8 border border-white/5 hover:border-gold/20 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 reveal-on-scroll" style="transition-delay: 100ms;">
+                    <div class="w-10 h-10 border border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold transition-colors">
+                        <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl text-softwhite mb-3">Clear Positioning</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        I help you explain your business clearly so people understand you fast.
+                    </p>
+                </div>
+
+                <div class="group p-8 border border-white/5 hover:border-gold/20 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 reveal-on-scroll" style="transition-delay: 200ms;">
+                    <div class="w-10 h-10 border border-gold/30 flex items-center justify-center mb-6 group-hover:border-gold transition-colors">
+                        <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl text-softwhite mb-3">High-End Landing Pages</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        I design simple but powerful pages that guide visitors to take action.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="why" class="relative py-24 px-6 bg-charcoal/20 border-t border-white/5">
+        <div class="container mx-auto max-w-4xl">
+            <div class="mb-12 reveal-on-scroll">
+                <span class="text-gold text-xs tracking-widest-xl uppercase mb-2 block">03</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-softwhite">Why This Matters</h2>
+            </div>
+
+            <div class="space-y-8 reveal-on-scroll">
+                <p class="text-gray-400 leading-relaxed text-lg">
+                    Many businesses look average online. When your digital presence is weak, people get confused, they don't trust easily, and they leave quickly.
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-8 py-8 border-y border-white/5">
+                    <div>
+                        <h4 class="text-gray-500 text-xs tracking-widest uppercase mb-4">When it is strong:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-gray-300">
+                                <span class="text-gold mt-1">—</span>
+                                <span>You look serious</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-300">
+                                <span class="text-gold mt-1">—</span>
+                                <span>You feel established</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-300">
+                                <span class="text-gold mt-1">—</span>
+                                <span>People are ready to work with you</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="flex items-center">
+                        <p class="font-serif text-2xl text-softwhite italic leading-relaxed">
+                            "Your online presence should match your ambition."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="relative py-24 px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-gold text-xs tracking-widest-xl uppercase mb-2 block">04</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-softwhite">This Is For You If…</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-8 reveal-on-scroll">
+                <div class="flex items-start gap-4 p-4 border-l border-gold/20 hover:border-gold transition-colors duration-300">
+                    <span class="text-gold font-serif text-lg">01</span>
+                    <p class="text-gray-300">You want to look professional online</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 border-l border-gold/20 hover:border-gold transition-colors duration-300">
+                    <span class="text-gold font-serif text-lg">02</span>
+                    <p class="text-gray-300">You are building something serious</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 border-l border-gold/20 hover:border-gold transition-colors duration-300">
+                    <span class="text-gold font-serif text-lg">03</span>
+                    <p class="text-gray-300">You don't want to look like everyone else</p>
+                </div>
+                <div class="flex items-start gap-4 p-4 border-l border-gold/20 hover:border-gold transition-colors duration-300">
+                    <span class="text-gold font-serif text-lg">04</span>
+                    <p class="text-gray-300">You understand that appearance creates trust</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="relative py-32 px-6 bg-charcoal/30 border-t border-white/5">
+        <div class="container mx-auto max-w-3xl text-center reveal-on-scroll">
+            <h2 class="font-serif text-3xl md:text-5xl text-softwhite mb-6 leading-tight">
+                Let's Build Your Digital Presence <br>
+                <span class="italic text-gray-400">The Right Way</span>
+            </h2>
+            
+            <p class="text-gray-400 mb-12 text-lg">
+                If you're serious about your business, let's talk.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#" class="btn-primary px-10 py-4 bg-gold text-navy font-medium tracking-widest text-xs uppercase">
+                    Book Consultation
+                </a>
+                <a href="https://wa.me/1234567890" target="_blank" class="btn-outline px-10 py-4 border border-white/20 text-softwhite font-medium tracking-widest text-xs uppercase hover:text-gold">
+                    WhatsApp Me
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="relative py-12 px-6 border-t border-white/5 bg-navy">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="Kay Logo" class="footer-logo">
+                <span class="font-serif text-softwhite tracking-widest text-sm">KAY — DIGITAL PRESENCE ARCHITECT</span>
+            </div>
+            <div class="text-gray-600 text-xs tracking-wider">
+                &copy; 2026 ALL RIGHTS RESERVED
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/1234567890" target="_blank" class="fixed bottom-8 right-8 z-40 group flex items-center justify-center w-14 h-14 bg-[#25D366] rounded-full shadow-2xl hover:scale-110 transition-transform duration-300">
+        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="absolute right-full mr-4 bg-white text-navy px-3 py-1 rounded text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">Chat Now</span>
+    </a>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-navy/95', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                navbar.classList.remove('py-6', 'border-transparent');
+                navbar.classList.add('border-white/5');
+            } else {
+                navbar.classList.remove('bg-navy/95', 'backdrop-blur-md', 'shadow-lg', 'py-4', 'border-white/5');
+                navbar.classList.add('py-6', 'border-transparent');
+            }
+        });
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('translate-x-full');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((element) => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
